@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import { ProductType } from "../types/types";
 
 type featuredProducts = [{
     id: number;
@@ -55,7 +56,20 @@ const featuredProducts = [
   
   ];
 
-const Featured = () => {
+  const getData = async ()=>{
+    const res = await fetch("http://localhost:3000/api/products",{
+      cache:"no-store"
+    })
+  
+    if(!res.ok){
+      throw new Error("Failed!");
+    }
+  
+    return res.json()
+  }
+
+const Featured = async() => {
+  const featuredProducts:ProductType[] = await getData()
   return (
     <div className="w-screen overflow-x-scroll text-[#F4EEE0] bg-black">
       {/* WRAPPER */}

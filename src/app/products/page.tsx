@@ -1,44 +1,26 @@
 import Link from "next/link";
 import React from "react";
-
-type menu = {
-    id: number;
-    slug: string;
-    title: string;
-    desc?: string;
-    img?: string;
-    color: string;
-  }[];
+import { MenuType } from "../types/types";
 
 
-const menu = [
-    {
-      id: 1,
-      slug: "homedecor",
-      title: "HOME DECOR",
-      desc: "Classic art ceramics for a timeless and elegant home decor.",
-      img: "/m1.jpg",
-      color: "#393646",
-    },
-    {
-      id: 2,
-      slug: "teaware",
-      title: "TEAWARE",
-      desc: "Timeless teaware ceramics for a touch of classic elegance in every sip.",
-      img: "/m2.jpg",
-      color: "#393646",
-    },
-    {
-      id: 3,
-      slug: "dinnerware",
-      title: "DINNERWARE",
-      desc: "Classic art dinnerware ceramics for an elegant dining experience every day.",
-      img: "/m3.jpg",
-      color: "#393646",
-    },
-  ];
 
-const MenuPage = () => {
+  const getData = async ()=>{
+    const res = await fetch("http://localhost:3000/api/categories",{
+      cache:"no-store"
+    })
+  
+    if(!res.ok){
+      throw new Error("Failed!");
+      
+    }
+  
+    return res.json()
+  }
+
+
+
+const MenuPage = async() => {
+  const menu:MenuType = await getData()
   return (
     <div className="p-4  lg:px-20 xl:px-40 h-[calc(100vh-3rem)] md:h-[calc(100vh-6rem)] flex flex-col md:flex-row items-center">
       {menu.map((category) => (
